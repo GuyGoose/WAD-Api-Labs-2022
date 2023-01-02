@@ -1,10 +1,10 @@
 import React from "react";
 import {createRoot} from "react-dom/client";
-import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
+import ReactDOM from "react-dom";
+import { BrowserRouter, Route, Navigate, Routes, Redirect, Switch, Link } from "react-router-dom";
 import HomePage from "./pages/homePage";
 import MoviePage from "./pages/movieDetailsPage";
 import FavouriteMoviesPage from "./pages/favouriteMoviesPage"; // NEW
-import {Link} from 'react-router-dom'
 import MovieReviewPage from "./pages/movieReviewPage";
 import SiteHeader from './components/siteHeader'
 import UpcomingMoviesPage from "./pages/upcomingMoviesPage";
@@ -16,6 +16,10 @@ import TVShowsPage from "./pages/tvShowsPage";
 import ShowsContextProvider from "./contexts/showsContext";
 import ShowPage from "./pages/showDetailsPage";
 import TopRatedShows from "./pages/topRatedShowsPage";
+import LoginPage from "./loginPage";
+import AuthProvider from "./authContext";
+import PrivateRoute from "./privateRoute";
+import AuthHeader from "./authHeader";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,6 +49,10 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="*" element={ <Navigate to="/movies/pg1" /> } />
         <Route path="/reviews/form" element={<AddMovieReviewPage/>} />
+        
+        <Route exact path="/" component={HomePage} />
+        <Route path="/login" component={LoginPage} />
+
         </Routes>
         </ShowsContextProvider>
         </MoviesContextProvider>
@@ -54,5 +62,6 @@ const App = () => {
   );
 };
 
+ReactDOM.render(<App />, document.getElementById("root"));
 const rootElement = createRoot(document.getElementById("root"));
 rootElement.render(<App />);
